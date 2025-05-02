@@ -1,0 +1,18 @@
+.cloudsort-loader {
+  height: 22px;
+  width: 22px;
+  border: 3px solid rgba(255, 255, 255, 0.75);
+  border-right-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: cloudsort-rotation 1s linear infinite;
+}
+@keyframes cloudsort-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
