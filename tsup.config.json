@@ -1,0 +1,16 @@
+{
+  "splitting": true,
+  "sourcemap": true,
+  "clean": true,
+  "minify": true,
+  "dts": true,
+  "format": ["esm", "cjs"],
+  "external": ["react", "react-dom"],
+  "entry": [
+    "src/index.ts"
+  ],
+  "tsconfig": "tsconfig.app.json",
+  "jsx": "react-jsx",
+  "target": "es2020",
+  "platform": "browser"
+}

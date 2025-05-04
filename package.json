@@ -1,18 +1,48 @@
 {
   "name": "reeling",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "description": "A React loading indicator inspired by curated cinema",
+  "version": "0.1.0",
   "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && npx tsup",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "keywords": [
+    "react",
+    "loading",
+    "spinner",
+    "loader",
+    "cinema",
+    "indicator"
+  ],
+  "author": {
+    "name": "David Y. Stephenson",
+    "email": "david@davidystephenson.com"
+  },
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidystephenson/reeling.git"
+  },
+  "bugs": {
+    "url": "https://github.com/davidystephenson/reeling/issues"
+  },
+  "homepage": "https://github.com/davidystephenson/reeling#readme",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@emotion/react": "^11.14.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.10",
@@ -20,6 +50,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "globals": "^16.0.0",
     "ts-standard": "^12.0.2",
+    "tsup": "^8.4.0",
     "typescript": "~5.7.2",
     "vite": "^6.3.1"
   }

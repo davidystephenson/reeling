@@ -1,12 +1,12 @@
 import { JSX } from 'react'
-import Reel from './Reel'
 import Reeling from './Reeling'
 import SingleReeling from './SingleReeling'
-import LoaderView from './LoaderView'
+
 function App (): JSX.Element {
   return (
     <>
       <h3>Reeling</h3>
+      <SingleReeling noir />
       <div
         style={{
           width: '200px',
@@ -14,9 +14,9 @@ function App (): JSX.Element {
           background: 'black'
         }}
       >
-        <Reeling />
+        <Reeling size='50%' />
       </div>
-      <div
+      {/* <div
         style={{
           width: '100px',
           height: '200px',
@@ -49,7 +49,7 @@ function App (): JSX.Element {
         <Reeling />
       </div>
       <h4>Image</h4>
-      <img src='https://i0.wp.com/the-avocado.org/wp-content/uploads/2021/04/Criterion-Logo.gif?resize=500%2C303&ssl=1' />
+      <img src='https://i0.wp.com/the-avocado.org/wp-content/uploads/2021/04/Criterion-Logo.gif?resize=500%2C303&ssl=1' /> */}
     </>
   )
 }

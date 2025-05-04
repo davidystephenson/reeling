@@ -1,54 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { JSX, useRef, useEffect, useState } from 'react'
-import { css, keyframes } from '@emotion/react'
+import { JSX } from 'react'
+import { css } from '@emotion/react'
+import { ReelingProps } from './types'
+import useReeling from './useReeling'
+import { KEYFRAMES } from './constants'
 
-const KEYFRAMES = keyframes`
-  100% { transform: rotate(1turn) }
-`
+export default function Reeling (props: ReelingProps): JSX.Element {
+  const use = useReeling(props)
 
-const RATIO = 4.375
-
-export default function Reeling (props: {
-  containerClassName?: string
-  reelClassName?: string
-  containerStyle?: React.CSSProperties
-  reelStyle?: React.CSSProperties
-  size?: React.CSSProperties['height'] & React.CSSProperties['width']
-}): JSX.Element {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [borderWidth, setBorderWidth] = useState('0px')
-
-  useEffect(() => {
-    function update (): void {
-      if (containerRef.current == null) {
-        return
-      }
-      const minimum = Math.min(
-        containerRef.current.offsetHeight,
-        containerRef.current.offsetWidth
-      )
-      const borderWidth = minimum / RATIO
-      setBorderWidth(`${borderWidth}px`)
-    }
-    update()
-
-    const observer = new ResizeObserver(update)
-    if (containerRef.current != null) {
-      observer.observe(containerRef.current)
-    }
-
-    return () => {
-      if (containerRef.current == null) {
-        return
-      }
-      observer.unobserve(containerRef.current)
-    }
-  }, [])
-
-  const size = props.size ?? '100%'
   const containerStyle: React.CSSProperties = {
-    height: size,
-    width: size,
+    height: use.size,
+    width: use.size,
     overflow: 'hidden',
     ...props.containerStyle
   }
@@ -56,14 +18,12 @@ export default function Reeling (props: {
   const reelClass = css({
     aspectRatio: '1/1',
     display: 'flex',
-    height: '100%',
-    width: '100%',
     borderRadius: '50%',
-    borderWidth,
+    borderWidth: use.borderWidth,
     borderStyle: 'solid',
-    borderTopColor: 'rgba(255, 255, 255, 0.75)',
-    borderRightColor: 'rgba(255, 255, 255, 0.75)',
-    borderBottomColor: 'rgba(255, 255, 255, 0.75)',
+    borderTopColor: use.color,
+    borderRightColor: use.color,
+    borderBottomColor: use.color,
     borderLeftColor: 'transparent',
     animation: `${KEYFRAMES} 1.75s infinite linear`,
     boxSizing: 'border-box',
@@ -73,13 +33,13 @@ export default function Reeling (props: {
 
   return (
     <div
-      style={containerStyle}
       className={props.containerClassName}
+      ref={use.ref}
+      style={containerStyle}
     >
       <span
-        css={reelClass}
         className={props.reelClassName}
-        ref={containerRef}
+        css={reelClass}
       />
     </div>
   )
