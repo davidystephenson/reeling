@@ -1,51 +1,101 @@
-import { JSX } from 'react'
+/** @jsxImportSource @emotion/react */
+import { JSX, useRef, useEffect, useState } from 'react'
+import { css, keyframes } from '@emotion/react'
 
-// Static CSS as a string for the keyframes animation
-const KEYFRAMES = `
-  @keyframes cloudsort-multi-rotation {
-    100% { transform: rotate(1turn) }
-  }
+const KEYFRAMES = keyframes`
+  100% { transform: rotate(1turn) }
 `
 
 const RATIO = 4.375
 
-export default function Reeling(props: {
-  size?: number
+export default function Reeling (props: {
+  containerClassName?: string
+  reelClassName?: string
+  containerStyle?: React.CSSProperties
+  reelStyle?: React.CSSProperties
+  size?: React.CSSProperties['height'] & React.CSSProperties['width']
 }): JSX.Element {
-  const size = props.size ?? 22
-  const borderSize = size / RATIO
-  const px = `${size}px`
-  const style: React.HTMLAttributes<HTMLDivElement>['style'] = {
-    width: px,
-    height: px,
-    borderRadius: '50%',
-    border: `${borderSize}px solid rgba(255, 255, 255, 0.33)`,
-    borderRightColor: 'transparent',
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useState('0px')
+  const [width, setWidth] = useState('0px')
+  const [borderWidth, setBorderWidth] = useState('0px')
+
+  useEffect(() => {
+    function update (): void {
+      if (containerRef.current == null) {
+        return
+      }
+      const minimum = Math.min(
+        containerRef.current.offsetHeight,
+        containerRef.current.offsetWidth
+      )
+      const borderWidth = minimum / RATIO
+      setBorderWidth(`${borderWidth}px`)
+      setHeight(`${minimum}px`)
+      setWidth(`${minimum}px`)
+    }
+    update()
+
+    const observer = new ResizeObserver(update)
+    if (containerRef.current != null) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      if (containerRef.current == null) {
+        return
+      }
+      observer.unobserve(containerRef.current)
+    }
+  }, [])
+
+  const size = props.size ?? '100%'
+  const containerStyle: React.CSSProperties = {
+    height: size,
+    width: size,
+    aspectRatio: '1/1',
+    overflow: 'hidden',
     position: 'relative',
-    animation: 'cloudsort-multi-rotation 1.5s infinite linear',
-    boxSizing: 'border-box'
+    display: 'flex',
+    ...props.containerStyle
   }
-  const pseudoElementStyles = `
-    .cloudsort-multi-reeling::before,
-    .cloudsort-multi-reeling::after {
-      content: "";
-      position: absolute;
-      inset: -${borderSize}px;
-      border-radius: 50%;
-      border: inherit;
-      animation: inherit;
-      animation-duration: 3s;
-    }
-    .cloudsort-multi-reeling::after {
-      border-radius: 50%;
-      animation-duration: 6s;
-    }
-  `
-  const __html = `${KEYFRAMES}${pseudoElementStyles}`
+
+  const reelClass = css({
+    width,
+    height,
+    borderRadius: '50%',
+    borderWidth,
+    borderStyle: 'solid',
+    borderTopColor: 'rgba(255, 255, 255, 0.33)',
+    borderRightColor: 'rgba(255, 255, 255, 0.33)',
+    borderBottomColor: 'rgba(255, 255, 255, 0.33)',
+    borderLeftColor: 'transparent',
+    animation: `${KEYFRAMES} 1.5s infinite linear`,
+    boxSizing: 'border-box',
+    '&::before, &::after': {
+      content: '""',
+      position: 'absolute',
+      inset: `-${borderWidth}`,
+      borderRadius: '50%',
+      border: 'inherit',
+      animation: 'inherit'
+    },
+    '&::before': {
+      animationDuration: '3s'
+    },
+    '&::after': {
+      animationDuration: '6s'
+    },
+    ...props.reelStyle
+  })
+
   return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html }} />
-      <span className="cloudsort-multi-reeling" style={style} />
-    </>
+    <div
+      ref={containerRef}
+      style={containerStyle}
+      className={props.containerClassName}
+    >
+      <span css={reelClass} className={props.reelClassName} />
+    </div>
   )
 }
