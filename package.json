@@ -2,7 +2,7 @@
   "name": "reeling",
   "private": false,
   "description": "A React loading indicator inspired by curated cinema",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
