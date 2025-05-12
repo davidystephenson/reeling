@@ -4,8 +4,8 @@ export interface UseReelingProps {
 }
 
 export interface ReelingProps extends UseReelingProps {
-  containerClassName?: string
-  containerStyle?: React.CSSProperties
+  canisterClassName?: string
+  canisterStyle?: React.CSSProperties
   reelClassName?: string
   reelStyle?: React.CSSProperties
 }

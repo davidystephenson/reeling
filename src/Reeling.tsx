@@ -8,14 +8,14 @@ import { KEYFRAMES } from './constants'
 export default function Reeling (props: ReelingProps): JSX.Element {
   const use = useReeling(props)
 
-  const containerStyle: React.CSSProperties = {
+  const canisterStyle: React.CSSProperties = {
     height: use.size,
     width: use.size,
     aspectRatio: '1/1',
-    overflow: 'hidden',
     position: 'relative',
     display: 'flex',
-    ...props.containerStyle
+    boxSizing: 'border-box',
+    ...props.canisterStyle
   }
 
   const reelClass = css({
@@ -49,9 +49,9 @@ export default function Reeling (props: ReelingProps): JSX.Element {
 
   return (
     <div
-      className={props.containerClassName}
+      className={props.canisterClassName}
       ref={use.ref}
-      style={containerStyle}
+      style={canisterStyle}
     >
       <span
         className={props.reelClassName}

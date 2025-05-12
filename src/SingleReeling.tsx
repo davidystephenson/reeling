@@ -12,7 +12,7 @@ export default function Reeling (props: ReelingProps): JSX.Element {
     height: use.size,
     width: use.size,
     overflow: 'hidden',
-    ...props.containerStyle
+    ...props.canisterStyle
   }
 
   const reelClass = css({
@@ -33,7 +33,7 @@ export default function Reeling (props: ReelingProps): JSX.Element {
 
   return (
     <div
-      className={props.containerClassName}
+      className={props.canisterClassName}
       ref={use.ref}
       style={containerStyle}
     >
